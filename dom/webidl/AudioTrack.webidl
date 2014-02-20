@@ -4,14 +4,13 @@
  * You can obtain one at http://mozilla.org/MPL/2.0/.
  *
  * The origin of this IDL file is
- * http://www.whatwg.org/specs/web-apps/current-work/#trackevent
+ * http://www.whatwg.org/specs/web-apps/current-work/#audiotrack
  */
 
-[Constructor(DOMString type, optional TrackEventInit eventInitDict)]
-interface TrackEvent : Event {
-  readonly attribute object track;
-};
-
-dictionary TrackEventInit : EventInit {
-  object? track = null;
+interface AudioTrack {
+  readonly attribute DOMString id;
+  readonly attribute DOMString kind;
+  readonly attribute DOMString label;
+  readonly attribute DOMString language;
+           attribute boolean enabled;
 };

@@ -6,7 +6,9 @@
 
 #include "mozilla/dom/HTMLMediaElement.h"
 #include "mozilla/dom/HTMLMediaElementBinding.h"
+#include "mozilla/dom/AudioTrackList.h"
 #include "mozilla/dom/ElementInlines.h"
+#include "mozilla/dom/VideoTrackList.h"
 #include "mozilla/ArrayUtils.h"
 #include "mozilla/MathAlgorithms.h"
 
@@ -425,7 +427,9 @@ NS_IMPL_CYCLE_COLLECTION_TRAVERSE_BEGIN_INHERITED(HTMLMediaElement, nsGenericHTM
     NS_IMPL_CYCLE_COLLECTION_TRAVERSE(mOutputStreams[i].mStream);
   }
   NS_IMPL_CYCLE_COLLECTION_TRAVERSE(mPlayed);
+  NS_IMPL_CYCLE_COLLECTION_TRAVERSE(mAudioTrackList)
   NS_IMPL_CYCLE_COLLECTION_TRAVERSE(mTextTrackManager)
+  NS_IMPL_CYCLE_COLLECTION_TRAVERSE(mVideoTrackList)
 NS_IMPL_CYCLE_COLLECTION_TRAVERSE_END
 
 NS_IMPL_CYCLE_COLLECTION_UNLINK_BEGIN_INHERITED(HTMLMediaElement, nsGenericHTMLElement)
@@ -445,7 +449,9 @@ NS_IMPL_CYCLE_COLLECTION_UNLINK_BEGIN_INHERITED(HTMLMediaElement, nsGenericHTMLE
     NS_IMPL_CYCLE_COLLECTION_UNLINK(mOutputStreams[i].mStream);
   }
   NS_IMPL_CYCLE_COLLECTION_UNLINK(mPlayed);
+  NS_IMPL_CYCLE_COLLECTION_UNLINK(mAudioTrackList)
   NS_IMPL_CYCLE_COLLECTION_UNLINK(mTextTrackManager)
+  NS_IMPL_CYCLE_COLLECTION_UNLINK(mVideoTrackList)
 NS_IMPL_CYCLE_COLLECTION_UNLINK_END
 
 NS_INTERFACE_MAP_BEGIN_CYCLE_COLLECTION_INHERITED(HTMLMediaElement)
@@ -2016,7 +2022,9 @@ HTMLMediaElement::HTMLMediaElement(already_AddRefed<nsINodeInfo> aNodeInfo)
   RegisterFreezableElement();
   NotifyOwnerDocumentActivityChanged();
 
+  mAudioTrackList = new AudioTrackList(OwnerDoc()->GetParentObject(), this);
   mTextTrackManager = new TextTrackManager(this);
+  mVideoTrackList = new VideoTrackList(OwnerDoc()->GetParentObject(), this);
 }
 
 HTMLMediaElement::~HTMLMediaElement()
@@ -3919,11 +3927,25 @@ NS_IMETHODIMP HTMLMediaElement::CanPlayChanged(int32_t canPlay)
   return NS_OK;
 }
 
+/* readonly attribute AudioTrackList audioTracks; */
+AudioTrackList*
+HTMLMediaElement::AudioTracks() const
+{
+  return mAudioTrackList;
+}
+
 /* readonly attribute TextTrackList textTracks; */
 TextTrackList*
 HTMLMediaElement::TextTracks() const
 {
   return mTextTrackManager ? mTextTrackManager->TextTracks() : nullptr;
+}
+
+/* readonly attribute VideoTrackList videoTracks; */
+VideoTrackList*
+HTMLMediaElement::VideoTracks() const
+{
+  return mVideoTrackList;
 }
 
 already_AddRefed<TextTrack>

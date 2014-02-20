@@ -109,10 +109,10 @@ TextTrackList::DidSeek()
   }
 }
 
-class TrackEventRunner MOZ_FINAL: public nsRunnable
+class TextTrackEventRunner MOZ_FINAL: public nsRunnable
 {
 public:
-  TrackEventRunner(TextTrackList* aList, nsIDOMEvent* aEvent)
+  TextTrackEventRunner(TextTrackList* aList, nsIDOMEvent* aEvent)
     : mList(aList)
     , mEvent(aEvent)
   {}
@@ -151,7 +151,7 @@ TextTrackList::CreateAndDispatchChangeEvent()
 
   event->SetTrusted(true);
 
-  nsCOMPtr<nsIRunnable> eventRunner = new TrackEventRunner(this, event);
+  nsCOMPtr<nsIRunnable> eventRunner = new TextTrackEventRunner(this, event);
   NS_DispatchToMainThread(eventRunner, NS_DISPATCH_NORMAL);
 }
 
@@ -162,12 +162,12 @@ TextTrackList::CreateAndDispatchTrackEventRunner(TextTrack* aTrack,
   TrackEventInit eventInit;
   eventInit.mBubbles = false;
   eventInit.mCancelable = false;
-  eventInit.mTrack = aTrack;
+  eventInit.mTrack = aTrack->GetWrapper();
   nsRefPtr<TrackEvent> event =
     TrackEvent::Constructor(this, aEventName, eventInit);
 
   // Dispatch the TrackEvent asynchronously.
-  nsCOMPtr<nsIRunnable> eventRunner = new TrackEventRunner(this, event);
+  nsCOMPtr<nsIRunnable> eventRunner = new TextTrackEventRunner(this, event);
   NS_DispatchToMainThread(eventRunner, NS_DISPATCH_NORMAL);
 }
 

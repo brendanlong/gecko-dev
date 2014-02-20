@@ -102,6 +102,8 @@ EXPORTS += [
 
 EXPORTS.mozilla.dom += [
     'AudioStreamTrack.h',
+    'AudioTrack.h',
+    'AudioTrackList.h',
     'MediaStreamTrack.h',
     'TextTrack.h',
     'TextTrackCue.h',
@@ -111,6 +113,8 @@ EXPORTS.mozilla.dom += [
     'TextTrackRegionList.h',
     'VideoPlaybackQuality.h',
     'VideoStreamTrack.h',
+    'VideoTrack.h',
+    'VideoTrackList.h',
 ]
 
 UNIFIED_SOURCES += [
@@ -123,6 +127,8 @@ UNIFIED_SOURCES += [
     'AudioSegment.cpp',
     'AudioStream.cpp',
     'AudioStreamTrack.cpp',
+    'AudioTrack.cpp',
+    'AudioTrackList.cpp',
     'BufferDecoder.cpp',
     'DOMMediaStream.cpp',
     'EncodedBufferCache.cpp',
@@ -152,6 +158,8 @@ UNIFIED_SOURCES += [
     'VideoPlaybackQuality.cpp',
     'VideoSegment.cpp',
     'VideoStreamTrack.cpp',
+    'VideoTrack.cpp',
+    'VideoTrackList.cpp',
     'VideoUtils.cpp',
     'WebVTTListener.cpp',
 ]

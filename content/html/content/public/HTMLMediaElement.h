@@ -37,8 +37,10 @@ class MediaResource;
 class MediaDecoder;
 class VideoFrameContainer;
 namespace dom {
+class AudioTrack;
 class TextTrack;
 class TimeRanges;
+class VideoTrack;
 class WakeLock;
 }
 }
@@ -50,9 +52,11 @@ class nsIRunnable;
 namespace mozilla {
 namespace dom {
 
+class AudioTrackList;
 class MediaError;
 class MediaSource;
 class TextTrackList;
+class VideoTrackList;
 
 class HTMLMediaElement : public nsGenericHTMLElement,
                          public nsIObserver,
@@ -518,7 +522,9 @@ public:
   AudioChannel MozAudioChannelType() const;
   void SetMozAudioChannelType(AudioChannel aValue, ErrorResult& aRv);
 
+  AudioTrackList* AudioTracks() const;
   TextTrackList* TextTracks() const;
+  VideoTrackList* VideoTracks() const;
 
   already_AddRefed<TextTrack> AddTextTrack(TextTrackKind aKind,
                                            const nsAString& aLabel,
@@ -1158,7 +1164,9 @@ protected:
   // An agent used to join audio channel service.
   nsCOMPtr<nsIAudioChannelAgent> mAudioChannelAgent;
 
+  nsRefPtr<AudioTrackList> mAudioTrackList;
   nsRefPtr<TextTrackManager> mTextTrackManager;
+  nsRefPtr<VideoTrackList> mVideoTrackList;
 };
 
 } // namespace dom
