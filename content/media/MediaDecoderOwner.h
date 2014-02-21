@@ -12,7 +12,10 @@ namespace mozilla {
 class VideoFrameContainer;
 
 namespace dom {
+class AudioTrack;
 class HTMLMediaElement;
+class TextTrack;
+class VideoTrack;
 }
 
 class MediaDecoderOwner
@@ -143,6 +146,13 @@ public:
   // Called by the media decoder object, on the main thread,
   // when the connection between Rtsp server and client gets lost.
   virtual void ResetConnectionState() = 0;
+
+  virtual void AddAudioTrack(dom::AudioTrack* aTrack) = 0;
+  virtual void RemoveAudioTrack(dom::AudioTrack* aTrack) = 0;
+  virtual void AddTextTrack(dom::TextTrack* aTrack) = 0;
+  virtual void RemoveTextTrack(dom::TextTrack* aTrack) = 0;
+  virtual void AddVideoTrack(dom::VideoTrack* aTrack) = 0;
+  virtual void RemoveVideoTrack(dom::VideoTrack* aTrack) = 0;
 };
 
 }

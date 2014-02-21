@@ -530,13 +530,17 @@ public:
                                            const nsAString& aLabel,
                                            const nsAString& aLanguage);
 
-  void AddTextTrack(TextTrack* aTextTrack) {
+  virtual void AddTextTrack(TextTrack* aTextTrack) MOZ_OVERRIDE {
     if (mTextTrackManager) {
       mTextTrackManager->AddTextTrack(aTextTrack);
     }
   }
 
-  void RemoveTextTrack(TextTrack* aTextTrack, bool aPendingListOnly = false) {
+  virtual void RemoveTextTrack(TextTrack* aTextTrack) MOZ_OVERRIDE {
+    RemoveTextTrack(aTextTrack, false);
+  }
+
+  void RemoveTextTrack(TextTrack* aTextTrack, bool aPendingListOnly) {
     if (mTextTrackManager) {
       mTextTrackManager->RemoveTextTrack(aTextTrack, aPendingListOnly);
     }
@@ -547,6 +551,11 @@ public:
       mTextTrackManager->AddCue(aCue);
     }
   }
+
+  virtual void AddAudioTrack(AudioTrack* aTrack) MOZ_OVERRIDE;
+  virtual void RemoveAudioTrack(AudioTrack* aTrack) MOZ_OVERRIDE;
+  virtual void AddVideoTrack(VideoTrack* aTrack) MOZ_OVERRIDE;
+  virtual void RemoveVideoTrack(VideoTrack* aTrack) MOZ_OVERRIDE;
 
   /**
    * A public wrapper for FinishDecoderSetup()

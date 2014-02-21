@@ -3959,6 +3959,30 @@ HTMLMediaElement::AddTextTrack(TextTrackKind aKind,
 }
 
 void
+HTMLMediaElement::AddAudioTrack(AudioTrack* aTrack)
+{
+  mAudioTrackList->AddAudioTrack(aTrack);
+}
+
+void
+HTMLMediaElement::RemoveAudioTrack(AudioTrack* aTrack)
+{
+  mAudioTrackList->RemoveAudioTrack(aTrack);
+}
+
+void
+HTMLMediaElement::AddVideoTrack(VideoTrack* aTrack)
+{
+  mVideoTrackList->AddVideoTrack(aTrack);
+}
+
+void
+HTMLMediaElement::RemoveVideoTrack(VideoTrack* aTrack)
+{
+  mVideoTrackList->RemoveVideoTrack(aTrack);
+}
+
+void
 HTMLMediaElement::PopulatePendingTextTrackList()
 {
   if (mTextTrackManager) {
